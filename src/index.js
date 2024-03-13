@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Client, IntentsBitField, EmbedBuilder } = require('discord.js');
+const { Client, IntentsBitField, ActivityType } = require('discord.js');
 
 const client = new Client({
   intents: [
@@ -10,48 +10,21 @@ const client = new Client({
   ],
 });
 
+let status = [
+  {
+    name: 'I am a bot',
+    type: ActivityType.Streaming,
+    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+  },
+];
+
 client.on('ready', (c) => {
   console.log(`✅ ${c.user.tag} is online.`);
-});
 
-client.on('interactionCreate', (interaction) => {
-  if (!interaction.isChatInputCommand()) return;
-
-  if (interaction.commandName === 'embed') {
-    const embed = new EmbedBuilder()
-      .setTitle('This is an embed')
-      .setDescription('Hello, world!')
-      .setColor('Random')
-      .addFields(
-        { name: 'Field 1', value: 'Ini Kontent 1', inline: true },
-        { name: 'Field 2', value: 'Ini Kontent 2', inline: true }
-      )
-
-    interaction.reply({ embeds: [embed] });
-  }
-});
-
-client.on('messageCreate', (message) => {
-  if (message.content === 'embed') {
-    const embed = new EmbedBuilder()
-      .setTitle('Embed title')
-      .setDescription('This is an embed description')
-      .setColor('Random')
-      .addFields(
-        {
-          name: 'Field title',
-          value: 'Some random value',
-          inline: true,
-        },
-        {
-          name: '2nd Field title',
-          value: 'Some random value',
-          inline: true,
-        }
-      );
-
-    message.channel.send({ embeds: [embed] });
-  }
+  setInterval(() => {
+    let random = Math.floor(Math.random() * status.length);
+    client.user.setActivity(status[random]);
+  }, 10000);
 });
 
 client.login(process.env.TOKEN);
