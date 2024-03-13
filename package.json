@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js",
-    "register": "node src/register-commands.js"
+    "dev": "nodemon src/index.js"
   },
   "keywords": [
     "bot"
